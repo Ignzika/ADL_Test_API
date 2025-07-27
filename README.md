@@ -1,9 +1,8 @@
 
 # Testing ADL
 
-Testin whit prostman and reporting with newman and htmlextra dependecy
-
-
+Testin whit prostman and reporting with newman and htmlextra dependecy,
+You can see the test results in html format on the "newman" folder.
 
 The Frontend testing repo is in 
 [The Front REPO](https://)
@@ -20,8 +19,8 @@ https://
 
 ## Screenshots
 
-![reporting required test](./assests/requested_test_run.png)
-![reporting aditional test](./assests/others_test_run.png)
+![reporting required test](./assets/requested_test_run.png)
+![reporting aditional test](./assets/others_test_run.png)
 
 
 
