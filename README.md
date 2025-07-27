@@ -7,9 +7,7 @@ You can see the test results in html format on the "newman" folder.
 The Frontend testing repo is in 
 [The Front REPO](https://)
 or:
-
 https://
-
 
 ## Authors
 
@@ -24,22 +22,25 @@ https://
 
 
 
-## Running Tests
-
-first install the dependencies of the proyect:
+## Running Tests and reporting
+The test can be imported on POSTMAN or directly run on terminal.
+First install the dependencies of the proyect:
 
 ```bash
   npm install newman
-```
 
-```bash
   npm install newman-reporter-htmlextra
 ```
-
 or alternatively: 
 
 ```bash
   npm install
+```
+for running the thes you can use: 
+```bash
+newman run test/requested_test.json -e test/environment.json -r htmlextra
+newman run test/others_test.json -e test/environment.json -r htmlextra
+
 ```
 
 
