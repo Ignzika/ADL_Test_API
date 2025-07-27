@@ -1,0 +1,63 @@
+{
+	"id": "8bad2095-4798-40c0-b702-8ae320af90e4",
+	"name": "TEST_API_ADL",
+	"values": [
+		{
+			"key": "baseUrl",
+			"value": "https://api-tester-adl.leonardojose.dev/api",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "testId",
+			"value": "string",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "objectSend",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "response_structure",
+			"value": "{\"name\":\"\",\"cuit\":\"\",\"email\":\"\",\"phone\":\"\",\"address\":\"\",\"updated_at\":\"\",\"created_at\":\"\",\"id\":\"\"}",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "objectSend_Bad_Cases",
+			"value": "string",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "testId_Bad_Cases",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "testId_Bad_Cases_2",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "testId_Bad_Cases_3",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2025-07-27T19:45:02.362Z",
+	"_postman_exported_using": "Postman/11.55.5"
+}

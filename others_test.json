@@ -1,0 +1,1070 @@
+{
+	"info": {
+		"_postman_id": "c4e4e4e1-e6fa-4cbb-ab2f-f7cdca0bacc3",
+		"name": "e2e_API_Others",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42338754",
+		"_collection_link": "https://carpinbara.postman.co/workspace/TESTING_ADL_FINAL~53cb3c2e-5793-4e4c-b4c9-3de36e1f53e2/collection/42338754-c4e4e4e1-e6fa-4cbb-ab2f-f7cdca0bacc3?action=share&source=collection_link&creator=42338754"
+	},
+	"item": [
+		{
+			"name": "wrong_password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"tester@adl.com\",\r\n    \"password\": \"Holi@2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wrong_email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"wrong@wronger.wrong\",\r\n    \"password\": \"Holi@2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wrong_email_format",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(422);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"script\",\r\n    \"password\": \"Holi@2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login_Bad_Cases",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"access_token is present\",  () => {    \r",
+							"    pm.expect(responseData.access_token).to.not.be.null;\r",
+							"    pm.environment.set(\"access_token\",responseData.access_token);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"not empy response\", () => {    \r",
+							"    pm.expect(responseData).to.not.be.null;\r",
+							"});\r",
+							"pm.test(\"response is a json object\", () => {    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"email\":\"testeradl@test.com\",\r\n    \"password\":\"Tester@2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new_Client_Empy_fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try{\r",
+							"const responseData = pm.response.json();\r",
+							"const  {created_at, updated_at, deleted_at , ...dataForTest} = responseData;\r",
+							"pm.environment.set(\"testId_Bad_Cases\", responseData.id);\r",
+							"pm.environment.set(\"objectSend_Bad_Cases\", JSON.stringify(dataForTest));\r",
+							"\r",
+							"pm.test(\"response status is 400 or 422\", () => {    \r",
+							"   pm.expect(pm.response.code).to.be.oneOf([400,422]);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"response is a error message\", () => {    \r",
+							"    pm.expect(pm.response.json()).to.have.property('message');\r",
+							"});\r",
+							"} catch (err)\r",
+							"{\r",
+							"    console.error(err)\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const bodyData = JSON.parse(pm.request.body.raw);\r",
+							"const bodyDataCheck = Object.values(bodyData);\r",
+							"\r",
+							"pm.test(\"body data send is not empty\", () => {\r",
+							"    const dataCheck = Object.values(bodyData).some(value => value === undefined || value === null || value === \"\");\r",
+							"    pm.expect(dataCheck).to.be.false;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n        \"name\": \"Caesar Stab Staby\",\r\n        \"cuit\": \"000 00000 00000\",\r\n        \"email\": \"\",\r\n        \"phone\": \"963258741\",\r\n        \"address\": \"calle falsa 321, Springfield\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new_client",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"pm.environment.set(\"testId_Bad_Cases_2\", responseData.id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n        \"name\": \"Rosa Rosalva Rosaro Rosanova\",\r\n        \"cuit\": \"852852852\",\r\n        \"email\": \"rosas@rosales.espinozas\",\r\n        \"phone\": \"987456321\",\r\n        \"address\": \"calle falsa 369, Springfield\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "client_with_repeated_data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response status is 400,409 or 422\", () => {    \r",
+							"   pm.expect(pm.response.code).to.be.oneOf([400,409,422]);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"Response should send a message\", () => {\r",
+							"    let responseData;\r",
+							"    try {\r",
+							"        responseData = pm.response.json();\r",
+							"        pm.expect(responseData).to.have.property('message').or.to.have.property('error');\r",
+							"    } catch (e) {\r",
+							"        pm.expect.fail(\"No valid response\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n        \"name\": \"Rosa Rosalva Rosaro Rosanova\",\r\n        \"cuit\": \"852852852\",\r\n        \"email\": \"rosas@rosales.espinozas\",\r\n        \"phone\": \"987456321\",\r\n        \"address\": \"calle falsa 369, Springfield\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "new_Client_incomplete_data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const estructure = Object.keys(JSON.parse(pm.environment.get(\"response_structure\")));\r",
+							"pm.environment.set(\"testId_Bad_Cases_3\",pm.response.json().id)\r",
+							"\r",
+							"pm.test(\"Response has the estructure\", () => {\r",
+							"    pm.expect(responseData).to.have.keys(estructure);\r",
+							"});\r",
+							"pm.test(\"Response should be a JSON\", () => {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response status is 400,409 or 422\", () => {    \r",
+							"   pm.expect(pm.response.code).to.be.oneOf([400,409,422]);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"Response should send a message\", () => {\r",
+							"    const responseData = pm.response.json();\r",
+							"    pm.expect(responseData).to.have.property('message').or.to.have.property('error');\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const bodyData = JSON.parse(pm.request.body.raw);\r",
+							"const bodyDataCheck = Object.values(bodyData);\r",
+							"const estructure = Object.keys(JSON.parse(pm.environment.get(\"response_structure\")));\r",
+							"\r",
+							"pm.test(\"body data send is not empty\", () => {\r",
+							"    const dataCheck = Object.values(bodyData).some(value => value === undefined || value === null || value === \"\");\r",
+							"    pm.expect(dataCheck).to.be.false;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Data sended has the estructure\", () => {\r",
+							"    pm.expect(responseData).to.have.keys(estructure);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n        \"name\": \"Luna Lunaria Lunares Lunara\",\r\n        \"cuit\": \"787548787\"\r\n        }\r\n        ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Client_Empty_data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const bodyData = JSON.parse(pm.request.body.raw);\r",
+							"const bodyDataCheck = Object.values(bodyData);\r",
+							"let responseData;\r",
+							"\r",
+							"pm.test(\"Response should send a error message\", () => {\r",
+							"    try {\r",
+							"        responseData = pm.response.json();\r",
+							"        pm.expect(responseData).to.have.property('message').or.to.have.property('error');\r",
+							"    } catch (e) {\r",
+							"        pm.expect.fail(\"No valid response\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response status is 400,409 or 422\", () => {    \r",
+							"   pm.expect(pm.response.code).to.be.oneOf([400,409,422]);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"body data send is not empty\", () => {\r",
+							"    const dataCheck = Object.values(bodyData).some(value => value === undefined || value === null || value === \"\");\r",
+							"    pm.expect(dataCheck).to.be.false;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n        \"name\": \"\",\r\n        \"cuit\": \"\",\r\n        \"email\": \"\",\r\n        \"phone\": \"\",\r\n        \"address\": \"\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_client_wrong_id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"response status is 404\", () => {    \r",
+							"    pm.response.to.have.status(404);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"respose is not empty\", () =>{\r",
+							"    pm.expect(responseData).to.not.be.empty;\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId}}234324224324",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId}}234324224324"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_email_wrong_format",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response should send a message\", () => {\r",
+							"    try {\r",
+							"        pm.expect(responseData).to.have.property('message').or.to.have.property('error');\r",
+							"    } catch (e) {\r",
+							"        pm.expect.fail(\"No valid response\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response status is 400,409 or 422\", () => {    \r",
+							"   pm.expect(pm.response.code).to.be.oneOf([400,409,422]);\r",
+							"}); "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n    \"email\": \"lala\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId_Bad_Cases}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId_Bad_Cases}}"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_phone_with_number",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response should send a message\", () => {\r",
+							"    try {\r",
+							"        pm.expect(responseData).to.have.property('message').or.to.have.property('error');\r",
+							"    } catch (e) {\r",
+							"        pm.expect.fail(\"No valid response\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response status is 400,409 or 422\", () => {    \r",
+							"   pm.expect(pm.response.code).to.be.oneOf([400,409,422]);\r",
+							"}); "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n    \"phone\": 2 + 2\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId_Bad_Cases}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId_Bad_Cases}}"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_phone_empy_value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response should send a message\", () => {\r",
+							"    try {\r",
+							"        pm.expect(responseData).to.have.property('message').or.to.have.property('error');\r",
+							"    } catch (e) {\r",
+							"        pm.expect.fail(\"No valid response\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response status is 400,409 or 422\", () => {    \r",
+							"   pm.expect(pm.response.code).to.be.oneOf([400,409,422]);\r",
+							"}); "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n    \"phone\": \"\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId_Bad_Cases}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId_Bad_Cases}}"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_email_to_object",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response should send a message\", () => {\r",
+							"    try {\r",
+							"        pm.expect(responseData).to.have.property('message').or.to.have.property('error');\r",
+							"    } catch (e) {\r",
+							"        pm.expect.fail(\"No valid response\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"response status is 400,409 or 422\", () => {    \r",
+							"   pm.expect(pm.response.code).to.be.oneOf([400,409,422]);\r",
+							"}); "
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": {\r\n        \"name\": \"erewAR23423#$%#$;\",\r\n        \"cuit\": \"1234234aef';\",\r\n        \"email\": \");\",\r\n        \"phone\": \"'!!!!!!!!!!!!!$#$%\",\r\n        \"address\": null\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId_Bad_Cases}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId_Bad_Cases}}"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_email_in_invalid_id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response status is 404\", () => {    \r",
+							"    pm.response.to.have.status(404);\r",
+							"}); \r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"correo@correo.correo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId_Bad_Cases}}9742188",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId_Bad_Cases}}9742188"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_bad_case_1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId_Bad_Cases}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId_Bad_Cases}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_Bad_Cases_2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId_Bad_Cases_2}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId_Bad_Cases_2}}"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_bad_case_3",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId_Bad_Cases_3}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId_Bad_Cases_3}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,501 @@
+{
+	"info": {
+		"_postman_id": "bb5ca50a-d694-4b11-833c-cc00107b84ce",
+		"name": "e2e_API_Requested",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42338754",
+		"_collection_link": "https://carpinbara.postman.co/workspace/TESTING_ADL_FINAL~53cb3c2e-5793-4e4c-b4c9-3de36e1f53e2/collection/42338754-bb5ca50a-d694-4b11-833c-cc00107b84ce?action=share&source=collection_link&creator=42338754"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"Access_token is present\",  () => {    \r",
+							"    pm.expect(responseData.access_token).to.not.be.null;\r",
+							"    pm.environment.set(\"access_token\",responseData.access_token);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"The response is a json object\", () => {    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The response is not null, undefined or empty\", () => {    \r",
+							"    pm.expect(responseData).to.not.be.null;\r",
+							"    pm.expect(responseData).to.be.not.undefined;\r",
+							"    pm.expect(responseData).to.be.not.empty\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const bodyData = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"pm.test(\"Credentials are not null, undefined or empty\", () => {\r",
+							"    const dataCheck = Object.values(bodyData).some(value => value === undefined || value === null || value === \"\");\r",
+							"    pm.expect(dataCheck).to.be.false;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"email\":\"testeradl@test.com\",\r\n    \"password\":\"Tester@2025\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_Clients",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json() || undefined;\r",
+							"\r",
+							"console.log(Object.values(responseData))\r",
+							"pm.test(\"Status code is 200\", () => {    \r",
+							"    pm.response.to.have.status(200);\r",
+							"}); \r",
+							"pm.test(\"The response is an array\", () => {    \r",
+							"    pm.expect(responseData).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The response is not null, undefined or empty\", () => {\r",
+							"    pm.expect(responseData).to.not.be.null;\r",
+							"    pm.expect(responseData).to.be.not.undefined;\r",
+							"    pm.expect(responseData).to.be.not.empty\r",
+							"})\r",
+							"\r",
+							"pm.test(\"There are no empy, null o undefined values in the response \", () => {\r",
+							"    let dataCheck =  undefined ||  null ||  \"\";\r",
+							"    const findVoid = responseData.some(item => {\r",
+							"    return Object.values(item).some(value => value === dataCheck);\r",
+							"    });\r",
+							"    pm.expect(findVoid).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create_new_client_with_page_fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"const  {created_at, updated_at, deleted_at , ...dataForTest} = responseData;\r",
+							"pm.environment.set(\"testId\", responseData.id);\r",
+							"pm.environment.set(\"objectSend\", JSON.stringify(dataForTest));\r",
+							"const estructure = Object.keys(JSON.parse(pm.environment.get(\"response_structure\")));\r",
+							"\r",
+							"pm.test(\"Response status code is 200 or 201\", () => {    \r",
+							"   pm.expect(pm.response.code).to.be.oneOf([200,201]);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"The response is a json object\", () => {    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The response has the expected estructure for the client\", () => {\r",
+							"    pm.expect(responseData).to.have.keys(estructure);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const bodyData = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"pm.test(\"The data sended is not empty\", () => {\r",
+							"    const dataCheck = Object.values(bodyData).some(value => value === undefined || value === null || value === \"\");\r",
+							"    pm.expect(dataCheck).to.be.false;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n        \"name\": \"Chicken McNuggets\",\r\n        \"cuit\": \"0303-456\",\r\n        \"email\": \"bodyDataCheck@asd.cdddd\",\r\n        \"phone\": \"03 03 456\",\r\n        \"address\": \"calle falsa 123, Springfield\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_client_id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"const responseData = pm.response.json() || undefined;\r",
+							"    console.log(Object.keys(responseData))\r",
+							"pm.test(\"response status is 200\", () => {    \r",
+							"    pm.response.to.have.status(200);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"response is an object\", () => {    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"The response is not null, undefined or empty\", () => {\r",
+							"    pm.expect(responseData).to.not.be.null;\r",
+							"    pm.expect(responseData).to.be.not.undefined;\r",
+							"    pm.expect(responseData).to.be.not.empty\r",
+							"});\r",
+							"\r",
+							"pm.test(\"There are no empty, null or undefined values in the response\", () => {\r",
+							"    const dataCheck =  undefined ||  null ||  \"\";\r",
+							"    const findVoid = Object.values(responseData).some(value => value === dataCheck);\r",
+							"    pm.expect(findVoid).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId}}"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update_value",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();\r",
+							"const { created_at, updated_at, deleted_at, ...testData } = responseData;\r",
+							"const oldData = JSON.parse(pm.environment.get(\"objectSend\"));\r",
+							"\r",
+							"pm.test(\"Response status code is 200\", () => {    \r",
+							"    pm.response.to.have.status(200);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"Data has a diferent update value\", ()=>{\r",
+							"pm.expect(testData).to.not.deep.equal(oldData);\r",
+							"pm.environment.set(\"objectSend\", JSON.stringify(testData));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.test(\"Selected data id exist\", ()=> {\r",
+							"    pm.expect(pm.environment.get(\"testId\")).to.exist;\r",
+							"    \r",
+							"})"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Dorito McDorito Tralalero Centellante\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId}}"
+					],
+					"query": [
+						{
+							"key": "bearerToken",
+							"value": "5766|pbk4qSQbg9qxmh0uIACGnDDbNxJk52S68W3SFuJh226850aa",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_by_ID",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const oldData = pm.environment.get(\"testId\");\r",
+							"\r",
+							"pm.test(\"Selected data id exist\", ()=> {\r",
+							"    const compare = oldData === \"\"\r",
+							"pm.expect(compare).to.be.false\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", () => {\r",
+							"    pm.response.to.have.status(204);  \r",
+							"});\r",
+							"\r",
+							"pm.test(\"If ID doesn't exist, should return status code 405\", () => {\r",
+							"    pm.expect(pm.response).to.have.status(405);  \r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"testId\", \"\");\r",
+							"pm.environment.set(\"objectSend\", \"\");\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/clients/{{testId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"clients",
+						"{{testId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "5826|jGNO3gsouZFOJPJmDIRuIVbOAsKxxMQ1osJnbP8qc3917b20",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
