@@ -1,13 +1,13 @@
 
 # Testing ADL
 
-Testin whit prostman and reporting with newman and htmlextra dependecy,
+Testing with postman, reporting with newman and htmlextra dependecy,
 You can see the test results in html format on the "newman" folder.
 
 The Frontend testing repo is in 
-[The Front REPO](https://)
+[The Front REPO](https://github.com/Ignzika/ADL_TEST_FRONT)
 or:
-https://
+https://github.com/Ignzika/ADL_TEST_FRONT
 
 ## Authors
 
